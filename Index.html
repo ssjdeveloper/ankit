@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Ankit Weds Kamna | 19 June 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@400;700&family=Noto+Sans+Devanagari:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #c9a84c;
+    --gold2: #f0d080;
+    --deep: #1a0a00;
+    --rose: #c0545a;
+    --cream: #fdf6e9;
+    --maroon: #7a1020;
+    --green: #2d6a4f;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: var(--deep);
+    font-family: 'Noto Sans Devanagari', sans-serif;
+  }
+
+  /* SLIDES CONTAINER */
+  #slides {
+    width: 100vw; height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ===== BG PATTERN ===== */
+  .mandala-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 50%, rgba(192,84,90,0.12) 0%, transparent 60%),
+      linear-gradient(160deg, #1a0800 0%, #2a1200 40%, #1a0800 100%);
+    z-index: 0;
+  }
+  .mandala-bg::before {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    background-image:
+      repeating-conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 5deg, rgba(201,168,76,0.04) 6deg, transparent 7deg);
+    animation: rotatePattern 60s linear infinite;
+  }
+  @keyframes rotatePattern {
+    to { transform: rotate(360deg); }
+  }
+
+  /* PETALS FALL */
+  .petals-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    top: -40px;
+    width: 12px; height: 18px;
+    border-radius: 50% 0 50% 0;
+    opacity: 0;
+    animation: petalFall linear infinite;
+  }
+  @keyframes petalFall {
+    0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.5; }
+    100% { transform: translateY(105vh) rotate(720deg) translateX(60px); opacity: 0; }
+  }
+
+  /* CORNER ORNAMENTS */
+  .corner {
+    position: absolute;
+    width: 90px; height: 90px;
+    z-index: 2;
+    opacity: 0.7;
+  }
+  .corner svg { width: 100%; height: 100%; }
+  .c-tl { top: 8px; left: 8px; }
+  .c-tr { top: 8px; right: 8px; transform: scaleX(-1); }
+  .c-bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
+  .c-br { bottom: 8px; right: 8px; transform: scale(-1); }
+
+  /* PROGRESS DOTS */
+  #dots {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 8px;
+    z-index: 100;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.3);
+    border: 1px solid var(--gold);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .dot.on { background: var(--gold); transform: scale(1.4); }
+
+  /* CONTROLS */
+  #prev, #next {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+    backdrop-filter: blur(4px);
+  }
+  #prev { left: 8px; }
+  #next { right: 8px; }
+  #prev:hover, #next:hover { background: rgba(201,168,76,0.4); }
+
+  /* SOUND BTN */
+  #soundBtn {
+    position: fixed;
+    top: 14px; right: 14px;
+    z-index: 100;
+    background: rgba(201,168,76,0.2);
+    border: 1px solid rgba(201,168,76,0.5);
+    color: var(--gold);
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+    backdrop-filter: blur(6px);
+  }
+  #soundBtn:hover { background: rgba(201,168,76,0.4); }
+
+  /* ===== SLIDE 1: COVER ===== */
+  #s1 .content {
+    position: relative; z-index: 5;
+    text-align: center;
+    padding: 20px;
+    animation: fadeInUp 1.2s ease forwards;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .shubh-tag {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: clamp(12px, 2.5vw, 15px);
+    color: var(--gold2);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.8;
+  }
+  .family-name {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: clamp(18px, 4.5vw, 28px);
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 4px;
+    text-shadow: 0 0 30px rgba(201,168,76,0.5);
+  }
+  .subheading {
+    font-size: clamp(10px, 2vw, 13px);
+    color: rgba(240,208,128,0.6);
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+  .couple-names-wrap {
+    position: relative;
+    margin: 10px 0 16px;
+  }
+  .groom-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(44px, 12vw, 90px);
+    color: var(--gold2);
+    line-height: 1;
+    text-shadow: 0 4px 20px rgba(201,168,76,0.6);
+    animation: glow 3s ease-in-out infinite;
+  }
+  @keyframes glow {
+    0%,100% { text-shadow: 0 4px 20px rgba(201,168,76,0.4); }
+    50% { text-shadow: 0 4px 40px rgba(201,168,76,0.9), 0 0 80px rgba(201,168,76,0.3); }
+  }
+  .weds-heart {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(14px, 3vw, 20px);
+    color: var(--rose);
+    letter-spacing: 4px;
+    margin: 4px 0;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  .weds-heart::before, .weds-heart::after {
+    content: '';
+    height: 1px;
+    width: 60px;
+    background: linear-gradient(to right, transparent, var(--rose));
+  }
+  .weds-heart::after { background: linear-gradient(to left, transparent, var(--rose)); }
+  .bride-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(44px, 12vw, 90px);
+    color: #f8c1c5;
+    line-height: 1;
+    text-shadow: 0 4px 20px rgba(192,84,90,0.5);
+    animation: glow2 3s ease-in-out infinite 1.5s;
+  }
+  @keyframes glow2 {
+    0%,100% { text-shadow: 0 4px 20px rgba(192,84,90,0.3); }
+    50% { text-shadow: 0 4px 40px rgba(192,84,90,0.8), 0 0 80px rgba(192,84,90,0.2); }
+  }
+  .date-badge {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 8px 28px;
+    border: 1px solid var(--gold);
+    border-radius: 40px;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(12px, 2.5vw, 16px);
+    color: var(--gold2);
+    letter-spacing: 3px;
+    background: rgba(201,168,76,0.1);
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+  }
+  .date-badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.2), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 2.5s ease infinite;
+  }
+  @keyframes shimmer {
+    to { transform: translateX(100%); }
+  }
+  .rings-icon {
+    font-size: clamp(24px, 5vw, 36px);
+    animation: pulse 2s ease infinite;
+    display: block;
+    margin: 10px auto;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+  }
+
+  /* ===== SLIDE 2: PHOTOS ===== */
+  #s2 .content {
+    position: relative; z-index: 5;
+    text-align: center;
+    padding: 16px;
+    width: 100%;
+  }
+  .slide-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(28px, 7vw, 52px);
+    color: var(--gold2);
+    margin-bottom: 6px;
+    text-shadow: 0 2px 20px rgba(201,168,76,0.5);
+  }
+  .slide-divider {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .slide-divider span { color: var(--rose); font-size: 20px; }
+  .slide-divider::before, .slide-divider::after {
+    content: '';
+    height: 1px; width: 80px;
+    background: linear-gradient(to right, transparent, var(--gold));
+  }
+  .slide-divider::after { background: linear-gradient(to left, transparent, var(--gold)); }
+  .photos-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .photo-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid var(--gold);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px rgba(201,168,76,0.2);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    animation: cardEntrance 1s ease forwards;
+  }
+  .photo-card:hover { transform: scale(1.04); box-shadow: 0 12px 40px rgba(201,168,76,0.4); }
+  @keyframes cardEntrance {
+    from { opacity: 0; transform: scale(0.8) translateY(30px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .photo-card img {
+    display: block;
+    object-fit: cover;
+    width: 100%; height: 100%;
+  }
+  .photo-card .name-tag {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(26,8,0,0.95), transparent);
+    padding: 20px 10px 8px;
+    text-align: center;
+  }
+  .photo-card .name-tag .pname {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(16px, 4vw, 24px);
+    color: var(--gold2);
+  }
+  .photo-card .name-tag .prole {
+    font-size: clamp(9px, 1.8vw, 11px);
+    color: rgba(240,208,128,0.7);
+    letter-spacing: 1px;
+  }
+  /* responsive photo sizes */
+  .photo-groom { width: clamp(120px, 28vw, 200px); height: clamp(160px, 38vw, 280px); animation-delay: 0.2s; }
+  .photo-center { width: clamp(80px, 18vw, 130px); height: clamp(80px, 18vw, 130px); border-radius: 50%; border: 3px solid var(--rose); animation-delay: 0.4s; display: flex; align-items: center; justify-content: center; flex-direction: column; background: radial-gradient(circle, #2a1200, #1a0800); }
+  .photo-bride { width: clamp(120px, 28vw, 200px); height: clamp(160px, 38vw, 280px); animation-delay: 0.6s; }
+  .heart-center { font-size: clamp(28px, 6vw, 48px); animation: pulse 2s infinite; }
+  .weds-txt { font-family: 'Dancing Script', cursive; color: var(--gold); font-size: clamp(12px, 2.5vw, 18px); }
+
+  .parents-info {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .parent-block {
+    text-align: center;
+    background: rgba(201,168,76,0.07);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 10px;
+    padding: 8px 16px;
+    max-width: 200px;
+  }
+  .parent-block .pb-title {
+    font-size: clamp(9px, 1.8vw, 11px);
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .parent-block .pb-name {
+    font-size: clamp(10px, 2vw, 13px);
+    color: var(--cream);
+    line-height: 1.6;
+  }
+
+  /* ===== SLIDE 3: EVENTS ===== */
+  #s3 .content {
+    position: relative; z-index: 5;
+    text-align: center;
+    padding: 16px 20px;
+    width: 100%;
+    max-width: 700px;
+  }
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .event-card {
+    background: rgba(201,168,76,0.07);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 12px;
+    padding: 12px 10px;
+    position: relative;
+    overflow: hidden;
+    animation: cardEntrance 0.8s ease forwards;
+    transition: transform 0.3s, background 0.3s;
+  }
+  .event-card:hover {
+    transform: translateY(-4px);
+    background: rgba(201,168,76,0.14);
+  }
+  .event-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--rose), var(--gold), var(--rose));
+  }
+  .event-icon { font-size: clamp(22px, 5vw, 34px); margin-bottom: 6px; display: block; }
+  .event-name {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: clamp(14px, 3.2vw, 20px);
+    color: var(--gold2);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .event-date {
+    font-size: clamp(11px, 2.2vw, 14px);
+    color: var(--rose);
+    font-weight: 600;
+  }
+  .event-day {
+    font-size: clamp(9px, 1.8vw, 11px);
+    color: rgba(240,208,128,0.6);
+    margin-top: 2px;
+  }
+  .event-venue {
+    font-size: clamp(9px, 1.8vw, 11px);
+    color: rgba(253,246,233,0.6);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* ===== SLIDE 4: VENUE ===== */
+  #s4 .content {
+    position: relative; z-index: 5;
+    text-align: center;
+    padding: 16px 20px;
+    width: 100%;
+    max-width: 680px;
+  }
+  .venue-box {
+    background: rgba(201,168,76,0.07);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 12px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .venue-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.05) 0%, transparent 50%);
+  }
+  .venue-icon { font-size: clamp(32px, 7vw, 52px); margin-bottom: 8px; display: block; animation: pulse 2s infinite; }
+  .venue-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(16px, 4vw, 26px);
+    color: var(--gold2);
+    margin-bottom: 6px;
+  }
+  .venue-addr {
+    font-size: clamp(12px, 2.5vw, 15px);
+    color: rgba(253,246,233,0.8);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .map-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 22px;
+    background: linear-gradient(135deg, var(--maroon), #5a1020);
+    border: 1px solid var(--rose);
+    border-radius: 30px;
+    color: var(--cream);
+    font-size: clamp(11px, 2.2vw, 14px);
+    text-decoration: none;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+  }
+  .map-btn:hover { background: var(--rose); transform: scale(1.05); }
+
+  .family-note {
+    background: rgba(122,16,32,0.2);
+    border: 1px solid rgba(192,84,90,0.3);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: clamp(11px, 2.2vw, 14px);
+    color: rgba(253,246,233,0.75);
+    line-height: 1.7;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+  }
+  .family-note strong { color: var(--gold); }
+
+  /* ===== SLIDE 5: INVITATION ===== */
+  #s5 .content {
+    position: relative; z-index: 5;
+    text-align: center;
+    padding: 16px 20px;
+    width: 100%;
+    max-width: 640px;
+  }
+  .invite-msg {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: clamp(14px, 3vw, 20px);
+    color: var(--cream);
+    line-height: 1.8;
+    background: rgba(201,168,76,0.07);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin: 10px 0;
+  }
+  .invite-msg .hi-line {
+    font-size: clamp(18px, 4vw, 26px);
+    color: var(--gold);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .sender-block {
+    margin-top: 12px;
+    background: rgba(45,106,79,0.15);
+    border: 1px solid rgba(45,106,79,0.35);
+    border-radius: 12px;
+    padding: 14px 20px;
+  }
+  .sender-block .s-label {
+    font-size: clamp(10px, 2vw, 12px);
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .sender-block .s-names {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: clamp(12px, 2.5vw, 16px);
+    color: var(--cream);
+    line-height: 1.8;
+  }
+  .countdown-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 14px 0;
+    flex-wrap: wrap;
+  }
+  .cd-box {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 10px;
+    padding: 10px 16px;
+    min-width: 60px;
+  }
+  .cd-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 5vw, 36px);
+    color: var(--gold2);
+    display: block;
+    line-height: 1;
+  }
+  .cd-label {
+    font-size: clamp(9px, 1.8vw, 11px);
+    color: rgba(240,208,128,0.6);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .copyright {
+    position: fixed;
+    bottom: 42px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(9px, 1.8vw, 11px);
+    color: rgba(201,168,76,0.45);
+    letter-spacing: 2px;
+    white-space: nowrap;
+    z-index: 50;
+    text-align:center;
+    pointer-events: none;
+  }
+
+  /* FIREFLIES */
+  .firefly {
+    position: absolute;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold), 0 0 16px var(--gold2);
+    animation: fly linear infinite;
+    opacity: 0;
+    z-index: 2;
+  }
+  @keyframes fly {
+    0% { opacity: 0; transform: translate(0,0) scale(0.5); }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1.5); }
+  }
+
+  /* SLIDE TRANSITION classes */
+  .slide { transform: scale(0.98); }
+  .slide.active { transform: scale(1); transition: opacity 0.8s ease, transform 0.8s ease; }
+</style>
+</head>
+<body>
+
+<!-- Sound button -->
+<button id="soundBtn" title="Toggle Music">🔇</button>
+
+<!-- Navigation -->
+<button id="prev">‹</button>
+<button id="next">›</button>
+
+<!-- Progress dots -->
+<div id="dots">
+  <div class="dot on" onclick="goTo(0)"></div>
+  <div class="dot" onclick="goTo(1)"></div>
+  <div class="dot" onclick="goTo(2)"></div>
+  <div class="dot" onclick="goTo(3)"></div>
+  <div class="dot" onclick="goTo(4)"></div>
+</div>
+
+<div class="copyright">© Design by Er. Satendra Jamhoriya <br> Founder & CEO | SSJ Developer</div>
+
+<!-- AUDIO -->
+<audio id="bgMusic" loop>
+  <source src="https://ssjdeveloper.com/wp-content/uploads/2026/06/sahilmadan-wedding-invitation-421393.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  // Jaise hi user page par kahin bhi click karega, music play ho jayega
+  document.addEventListener('click', function() {
+    var audio = document.getElementById("bgMusic");
+    
+    // Check karega ki music chal raha hai ya nahi, agar nahi to play kar dega
+    if (audio.paused) {
+      audio.play().catch(function(error) {
+        console.log("Autoplay prevent ho gaya tha, par ab chal gaya:", error);
+      });
+    }
+  }, { once: true }); // '{ once: true }' se ye event sirf pehli click par hi chalega
+</script>
+
+<div id="slides">
+
+  <!-- ============ SLIDE 1: COVER ============ -->
+  <div class="slide active" id="s1">
+    <div class="mandala-bg"></div>
+    <div class="petals-container" id="petals1"></div>
+    <!-- Fireflies -->
+    <div id="fireflies"></div>
+    <!-- Corners -->
+    <div class="corner c-tl"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><path d="M5 5 Q40 5 40 40" stroke="#c9a84c" stroke-width="1" fill="none" stroke-dasharray="4 3"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/><circle cx="40" cy="40" r="2" fill="#f0d080"/><path d="M20 5 L5 20" stroke="#c0545a" stroke-width="1"/><path d="M5 35 L35 5" stroke="#c9a84c" stroke-width="0.5"/></svg></div>
+    <div class="corner c-tr"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><path d="M5 5 Q40 5 40 40" stroke="#c9a84c" stroke-width="1" fill="none" stroke-dasharray="4 3"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/><circle cx="40" cy="40" r="2" fill="#f0d080"/></svg></div>
+    <div class="corner c-bl"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><path d="M5 5 Q40 5 40 40" stroke="#c9a84c" stroke-width="1" fill="none" stroke-dasharray="4 3"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/><circle cx="40" cy="40" r="2" fill="#f0d080"/></svg></div>
+    <div class="corner c-br"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><path d="M5 5 Q40 5 40 40" stroke="#c9a84c" stroke-width="1" fill="none" stroke-dasharray="4 3"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/><circle cx="40" cy="40" r="2" fill="#f0d080"/></svg></div>
+
+    <div class="content">
+      <div class="shubh-tag">🪔 शुभ विवाह 🪔</div>
+      <div class="family-name">जम्होरिया परिवार</div>
+      <div class="subheading">आपका हार्दिक स्वागत करता है</div>
+      <div class="couple-names-wrap">
+        <div class="groom-name">Ankit (Fauji)</div>
+        <div class="weds-heart">❤️ weds ❤️</div>
+        <div class="bride-name">Kamna</div>
+      </div>
+      <span class="rings-icon">💍</span>
+      <div class="date-badge">19 June 2026 · गुरुवार</div>
+    </div>
+  </div>
+
+  <!-- ============ SLIDE 2: COUPLE ============ -->
+  <div class="slide" id="s2">
+    <div class="mandala-bg"></div>
+    <div class="petals-container" id="petals2"></div>
+    <div class="corner c-tl"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+    <div class="corner c-tr"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+    <div class="corner c-bl"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+    <div class="corner c-br"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+
+    <div class="content">
+      <div class="slide-title">The Couple</div>
+      <div class="slide-divider"><span>✿</span></div>
+
+      <div class="photos-row">
+        <div class="photo-card photo-groom">
+          <img src="https://ssjdeveloper.com/wp-content/uploads/2026/06/Ankit.jpeg" alt="Ankit Singh">
+          <div class="name-tag">
+            <div class="pname">Ankit Singh (Fauji)</div>
+            <div class="prole">चि. अंकित सिंह · असम राइफल्स</div>
+          </div>
+        </div>
+        <div class="photo-card photo-center">
+          <span class="heart-center">💕</span>
+          <span class="weds-txt">weds</span>
+        </div>
+        <div class="photo-card photo-bride">
+          <img src="https://ssjdeveloper.com/wp-content/uploads/2026/06/Kamna.jpeg" alt="Kamna Dadoria">
+          <div class="name-tag">
+            <div class="pname">Kamna Dadoria</div>
+            <div class="prole">आयु. कामना दादोरिया</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="parents-info">
+        <div class="parent-block">
+          <div class="pb-title">🎩 वर पक्ष</div>
+          <div class="pb-name">सुपौत्र: श्रीमती रामदुलारी<br>श्री चेतराम जम्होरिया<br>श्री महीपाल सिंह जम्होरिया</div>
+        </div>
+        <div class="parent-block">
+          <div class="pb-title">👰 वधू पक्ष</div>
+          <div class="pb-name">सुपुत्री: श्रीमती प्रेमलता<br>रिटायर्ड कैप्टन आशाराम दादोरिया</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SLIDE 3: EVENTS ============ -->
+  <div class="slide" id="s3">
+    <div class="mandala-bg"></div>
+    <div class="petals-container" id="petals3"></div>
+    <div class="corner c-tl"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+    <div class="corner c-tr"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+    <div class="corner c-bl"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+    <div class="corner c-br"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+
+    <div class="content">
+      <div class="slide-title">शुभ विवाह कार्यक्रम</div>
+      <div class="slide-divider"><span>✦</span></div>
+      <div class="events-grid">
+        <div class="event-card" style="animation-delay:0.1s">
+          <span class="event-icon">🌸</span>
+          <div class="event-name">लगुन फलदन एवं प्रतिभोज</div>
+          <div class="event-date">15 जून 2026</div>
+          <div class="event-day">रविवार</div>
+          <div class="event-venue">रामचरण गार्डन बरेह अम्बाह, जिला मुरैना (म.प्र.)</div>
+        </div>
+        <div class="event-card" style="animation-delay:0.2s">
+          <span class="event-icon">💛</span>
+          <div class="event-name">हल्दी</div>
+          <div class="event-date">17 जून 2026</div>
+          <div class="event-day">बुधवार</div>
+        </div>
+        <div class="event-card" style="animation-delay:0.3s">
+          <span class="event-icon">🏛️</span>
+          <div class="event-name">मण्डप</div>
+          <div class="event-date">18 जून 2026</div>
+          <div class="event-day">गुरुवार</div>
+        </div>
+        <div class="event-card" style="animation-delay:0.4s">
+          <span class="event-icon">💍</span>
+          <div class="event-name">टीका एवं पाणिग्रहण</div>
+          <div class="event-date">19 जून 2026</div>
+          <div class="event-day">शुक्रवार</div>
+        </div>
+        <div class="event-card" style="animation-delay:0.5s; grid-column: 1 / -1;">
+          <span class="event-icon">🚗</span>
+          <div class="event-name">वधू आगमन</div>
+          <div class="event-date">20 जून 2026</div>
+          <div class="event-day">शनिवार</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SLIDE 4: VENUE ============ -->
+  <div class="slide" id="s4">
+    <div class="mandala-bg"></div>
+    <div class="petals-container" id="petals4"></div>
+    <div class="corner c-tl"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+    <div class="corner c-tr"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+    <div class="corner c-bl"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+    <div class="corner c-br"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+
+    <div class="content">
+      <div class="slide-title">Venue</div>
+      <div class="slide-divider"><span>🏡</span></div>
+
+      <div class="venue-box">
+        <span class="venue-icon">📍</span>
+        <div class="venue-name">रामचरण गार्डन</div>
+        <div class="venue-addr">
+          बरेह अम्बाह, जिला मुरैना<br>
+          मध्य प्रदेश (म.प्र.)
+        </div>
+        <a class="map-btn" href="https://maps.app.goo.gl/5WAyZ54eRaBuYJeY9" target="_blank">
+          🗺️ Google Maps पर देखें
+        </a>
+      </div>
+
+      <div class="family-note">
+        <strong>प्रेषक:</strong><br>
+        श्री चेतराम जम्होरिया &amp; श्री महीपाल सिंह जम्होरिया<br>
+        <em style="color:var(--gold);font-size:0.9em;">(बड़ापुरा जौंहा अम्बाह)</em><br><br>
+        <strong>स्वागत कर्ता:</strong> श्रीलाल, रामप्रकाश, रामनरेश (शिक्षक), फूफा जी:- शीतल प्रसाद, दीनानाथ गहलोत<br>
+        <strong>दर्शनाभिलासी:</strong> चंद्रभान, अनिल, रिंकू, बंटी, संदीप, शशिकांत, अरुण एवं समस्त जम्होरिया परिवार
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SLIDE 5: INVITATION ============ -->
+  <div class="slide" id="s5">
+    <div class="mandala-bg"></div>
+    <div class="petals-container" id="petals5"></div>
+    <div class="corner c-tl"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+    <div class="corner c-tr"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+    <div class="corner c-bl"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+    <div class="corner c-br"><svg viewBox="0 0 80 80" fill="none"><path d="M5 5 Q5 40 40 40 Q5 40 5 75" stroke="#c9a84c" stroke-width="1.5" fill="none"/><circle cx="5" cy="5" r="3" fill="#c9a84c"/></svg></div>
+
+    <div class="content">
+      <div class="slide-title">सप्रेम आमंत्रण</div>
+      <div class="slide-divider"><span>🙏</span></div>
+
+      <div class="invite-msg">
+        <span class="hi-line">🪔 हमारे इस शुभ अवसर पर 🪔</span>
+        आपकी उपस्थिति हमारे लिए <strong style="color:var(--gold)">सौभाग्य होगी।</strong><br><br>
+        बेसक घर है दूर आपका, फुरसत की मजबूरी है।<br>
+        <em style="color:#f8c1c5;">हमारे भैया की शादी में आना बहुत ही जरूरी है…</em><br><br>
+        <span style="color:var(--gold);font-size:0.9em;">— गुनगुन, वंशिका, आदित्य, सत्यम, नैतिक 🤗</span>
+      </div>
+
+      <div class="countdown-wrap">
+        <div class="cd-box"><span class="cd-num" id="cdDays">--</span><span class="cd-label">Days</span></div>
+        <div class="cd-box"><span class="cd-num" id="cdHrs">--</span><span class="cd-label">Hours</span></div>
+        <div class="cd-box"><span class="cd-num" id="cdMin">--</span><span class="cd-label">Mins</span></div>
+        <div class="cd-box"><span class="cd-num" id="cdSec">--</span><span class="cd-label">Secs</span></div>
+      </div>
+
+      <div class="sender-block">
+        <div class="s-label">🌺 धन्यवाद 🌺</div>
+        <div class="s-names">
+          श्री चेतराम जम्होरिया &amp; श्री महीपाल सिंह जम्होरिया<br>
+          (बड़ापुरा जौंहा अम्बाह)<br>
+          <span style="color:var(--gold);font-size:0.9em;">🙏🙏🙏</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end slides -->
+
+<script>
+// ===== SLIDE ENGINE =====
+let current = 0;
+const totalSlides = 5;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+let autoTimer;
+
+function goTo(n) {
+  slides[current].classList.remove('active');
+  dots[current].classList.remove('on');
+  current = (n + totalSlides) % totalSlides;
+  slides[current].classList.add('active');
+  dots[current].classList.add('on');
+  clearTimeout(autoTimer);
+  autoTimer = setTimeout(() => goTo(current + 1), 6000);
+}
+
+document.getElementById('next').onclick = () => goTo(current + 1);
+document.getElementById('prev').onclick = () => goTo(current - 1);
+
+// Touch swipe
+let touchX = 0;
+document.addEventListener('touchstart', e => touchX = e.touches[0].clientX);
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 50) dx < 0 ? goTo(current + 1) : goTo(current - 1);
+});
+
+autoTimer = setTimeout(() => goTo(1), 6000);
+
+// ===== PETALS =====
+const petalColors = ['#c0545a','#f0d080','#f8c1c5','#c9a84c','#fff0e0','#e8a0a4'];
+function createPetals(containerId, count) {
+  const c = document.getElementById(containerId);
+  if (!c) return;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.background = petalColors[Math.floor(Math.random() * petalColors.length)];
+    p.style.animationDuration = (6 + Math.random() * 10) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    p.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+    c.appendChild(p);
+  }
+}
+for (let i = 1; i <= 5; i++) createPetals('petals' + i, 12);
+
+// ===== FIREFLIES =====
+const ff = document.getElementById('fireflies');
+for (let i = 0; i < 18; i++) {
+  const f = document.createElement('div');
+  f.className = 'firefly';
+  f.style.left = Math.random() * 100 + 'vw';
+  f.style.top = Math.random() * 100 + 'vh';
+  f.style.setProperty('--tx', (Math.random() * 200 - 100) + 'px');
+  f.style.setProperty('--ty', (Math.random() * 200 - 100) + 'px');
+  f.style.animationDuration = (4 + Math.random() * 8) + 's';
+  f.style.animationDelay = (Math.random() * 8) + 's';
+  f.style.width = f.style.height = (2 + Math.random() * 3) + 'px';
+  ff.appendChild(f);
+}
+
+// ===== SOUND =====
+const music = document.getElementById('bgMusic');
+const btn = document.getElementById('soundBtn');
+let playing = false;
+
+// Web Speech API voice greeting
+function speakGreeting() {
+  if ('speechSynthesis' in window) {
+    const msg = new SpeechSynthesisUtterance();
+    msg.text = "Ankit weds Kamna. Jamhoriya Parivar cordially invites you to this auspicious wedding celebration on 19th June 2026. Please grace us with your presence.";
+    msg.lang = 'en-IN';
+    msg.pitch = 1.1;
+    msg.rate = 0.85;
+    msg.volume = 0.9;
+    window.speechSynthesis.speak(msg);
+  }
+}
+
+btn.onclick = function() {
+  if (!playing) {
+    music.volume = 0.3;
+    music.play().catch(() => {});
+    btn.textContent = '🔊';
+    playing = true;
+    speakGreeting();
+  } else {
+    music.pause();
+    btn.textContent = '🔇';
+    playing = false;
+    window.speechSynthesis.cancel();
+  }
+};
+
+// ===== COUNTDOWN =====
+function updateCountdown() {
+  const target = new Date('2026-06-19T08:00:00');
+  const now = new Date();
+  const diff = target - now;
+  if (diff <= 0) {
+    document.getElementById('cdDays').textContent = '0';
+    document.getElementById('cdHrs').textContent = '0';
+    document.getElementById('cdMin').textContent = '0';
+    document.getElementById('cdSec').textContent = '0';
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cdDays').textContent = String(d).padStart(2,'0');
+  document.getElementById('cdHrs').textContent = String(h).padStart(2,'0');
+  document.getElementById('cdMin').textContent = String(m).padStart(2,'0');
+  document.getElementById('cdSec').textContent = String(s).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html> 
